@@ -19,7 +19,7 @@
 - **Java版本**: 17+
 
 ### 🌐 服务信息
-- **开发环境**: http://localhost:5000
+- **开发环境**: http://45.204.6.32:5000
 - **数据库**: MySQL (8.138.177.105:3306/boot)
 - **认证方式**: JWT Bearer Token
 
@@ -900,7 +900,7 @@ Authorization: Bearer <admin_token>
 
 ```bash
 # 1. 用户注册
-curl -X POST http://localhost:5000/api/register \
+curl -X POST http://45.204.6.32:5000/api/register \
   -H "Content-Type: application/json" \
   -d '{
     "username": "testuser",
@@ -909,7 +909,7 @@ curl -X POST http://localhost:5000/api/register \
   }'
 
 # 2. 用户登录
-curl -X POST http://localhost:5000/api/login \
+curl -X POST http://45.204.6.32:5000/api/login \
   -H "Content-Type: application/json" \
   -d '{
     "username": "testuser",
@@ -917,11 +917,11 @@ curl -X POST http://localhost:5000/api/login \
   }'
 
 # 3. 获取当前用户信息
-curl -X GET http://localhost:5000/api/user/info \
+curl -X GET http://45.204.6.32:5000/api/user/info \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 
 # 4. 管理员为用户充值frequency
-curl -X PUT http://localhost:5000/api/user/frequency \
+curl -X PUT http://45.204.6.32:5000/api/user/frequency \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer ADMIN_TOKEN" \
   -d '{
@@ -930,7 +930,7 @@ curl -X PUT http://localhost:5000/api/user/frequency \
   }'
 
 # 5. 管理员单次充值
-curl -X POST http://localhost:5000/api/user/1/frequency/increment \
+curl -X POST http://45.204.6.32:5000/api/user/1/frequency/increment \
   -H "Authorization: Bearer ADMIN_TOKEN"
 ```
 

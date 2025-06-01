@@ -2,14 +2,11 @@
 export const API_ENDPOINTS = {
     // 后端 API 配置
     BACKEND: {
-        DEVELOPMENT: 'http://45.204.6.32:5000/api', // 开发环境本地地址
-        PRODUCTION: 'http://45.204.6.32:5000/api', // 生产环境服务器地址
-        PROXY_PATH: '/api', // 开发环境代理路径
+        BASE_URL: 'http://45.204.6.32:5000/api', // 后端服务器地址
     },
     // Cloudflare API 配置
     CLOUDFLARE: {
         BASE_URL: 'https://api.cloudflare.com/client/v4',
-        PROXY_PATH: '/cloudflare-api', // 开发环境代理路径
     }
 } as const;
 
@@ -18,12 +15,8 @@ export const API_CONFIG = {
     TIMEOUT: 15000, // 增加超时时间，因为跨域请求可能较慢
     RETRY_ATTEMPTS: 3,
     RETRY_DELAY: 1000,
-    // 根据环境自动选择后端 API 地址
-    get BASE_URL() {
-        return import.meta.env.DEV
-            ? API_ENDPOINTS.BACKEND.PROXY_PATH
-            : API_ENDPOINTS.BACKEND.PRODUCTION;
-    },
+    // 后端 API 地址
+    BASE_URL: API_ENDPOINTS.BACKEND.BASE_URL,
     // 跨域配置
     CORS: {
         withCredentials: false, // 跨域请求不发送 cookies
@@ -46,12 +39,8 @@ export const CLOUDFLARE_CONFIG = {
     ZONE_ID: '4b77e7738254c98795f1ffe4da0e19b9',
     ACCOUNT_ID: '40fda975fc0eb67e944a9d215f2c1152', // 请替换为您的真实 Cloudflare Account ID
     EMAIL_DOMAIN: '184772.xyz',
-    // 根据环境自动选择 Cloudflare API 地址
-    get BASE_URL() {
-        return import.meta.env.DEV
-            ? API_ENDPOINTS.CLOUDFLARE.PROXY_PATH
-            : API_ENDPOINTS.CLOUDFLARE.BASE_URL;
-    }
+    // 通过后端代理所有 Cloudflare API 请求，避免 CORS 问题
+    BASE_URL: API_ENDPOINTS.BACKEND.BASE_URL + '/cloudflare'
 } as const;
 
 // 配额配置

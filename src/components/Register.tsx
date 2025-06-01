@@ -54,7 +54,6 @@ const Register: React.FC = () => {
                 email: values.email,
                 permissions: 'user' // 统一默认为普通用户
             });
-            console.log('Register successful:', response);
 
             // 显示注册成功提示
             message.success({
@@ -75,7 +74,6 @@ const Register: React.FC = () => {
             }, 1500);
         } catch (err: any) {
             setError(err.message || '注册失败，请稍后重试');
-            console.error('Register error:', err);
         } finally {
             setLoading(false);
         }

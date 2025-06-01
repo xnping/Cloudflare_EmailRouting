@@ -59,14 +59,11 @@ const ModernAdminLayout: React.FC<ModernAdminLayoutProps> = ({ children }) => {
     sessionStorage.removeItem('user');
     sessionStorage.removeItem('rememberMe');
 
-    console.log('管理员退出登录');
-
     // 重定向到登录页面
     navigate('/login');
   };
 
   const handleBackToFrontend = () => {
-    console.log('返回前台');
     // 直接跳转到前台首页
     navigate('/');
   };

@@ -89,7 +89,6 @@ const ModernDashboard: React.FC = () => {
       const dashboardStats = await adminApi.getDashboardStats();
       setStats(dashboardStats);
     } catch (err) {
-      console.error('加载仪表板数据失败:', err);
       setError(err instanceof Error ? err.message : '加载数据失败');
     } finally {
       setLoading(false);

@@ -225,30 +225,66 @@ const ModernUserManagement: React.FC = () => {
   const handleEditSubmit = async () => {
     try {
       setLoading(true);
-      // 构建更新数据，如果密码为空则不包含密码字段
+      // 构建更新数据，只包含非空字段
       const updateData: any = {
         username: editForm.username,
         email: editForm.email,
-        permissions: editForm.permissions
+        permissions: editForm.permissions,
+        frequency: editForm.frequency
       };
 
-      if (editForm.password.trim()) {
-        updateData.password = editForm.password;
+      // 只有当密码不为空时才包含密码字段
+      if (editForm.password && editForm.password.trim()) {
+        updateData.password = editForm.password.trim();
       }
 
-      await adminApi.updateUser(editForm.id, updateData);
+      // 分别更新基本信息和配额，避免权限问题
+      const basicData = { ...updateData };
+      delete basicData.frequency;
 
-      // 如果频次有变化，单独更新频次
-      if (editForm.frequency !== users.find(u => u.id === editForm.id)?.frequency) {
-        await adminApi.updateUserFrequency({ userId: editForm.id, frequency: editForm.frequency });
+      let basicUpdateSuccess = false;
+      let frequencyUpdateSuccess = false;
+
+      // 先更新基本信息（如果有的话）
+      if (Object.keys(basicData).length > 0) {
+        try {
+          await adminApi.updateUser(editForm.id, basicData);
+          basicUpdateSuccess = true;
+        } catch (err) {
+          // 如果只是更新配额，基本信息失败不影响整体操作
+        }
+      }
+
+      // 单独更新配额
+      if (updateData.frequency !== undefined) {
+        try {
+          await adminApi.updateUserFrequency({
+            userId: editForm.id,
+            frequency: updateData.frequency
+          });
+          frequencyUpdateSuccess = true;
+        } catch (err) {
+          throw new Error('配额更新失败: ' + (err instanceof Error ? err.message : '未知错误'));
+        }
+      }
+
+      // 检查更新结果
+      if (Object.keys(basicData).length > 0 && !basicUpdateSuccess && !frequencyUpdateSuccess) {
+        throw new Error('用户信息更新失败');
       }
 
       alert('用户更新成功！');
       setShowEditModal(false);
       await loadUsers(); // 重新加载数据
-    } catch (err) {
-      console.error('更新用户失败:', err);
-      alert(err instanceof Error ? err.message : '更新用户失败');
+    } catch (err: any) {
+      let errorMessage = '更新用户失败';
+      if (err.message) {
+        errorMessage = err.message;
+      } else if (err.response?.data?.message) {
+        errorMessage = err.response.data.message;
+      }
+
+      alert(errorMessage);
     } finally {
       setLoading(false);
     }

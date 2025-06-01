@@ -59,16 +59,12 @@ const Login: React.FC = () => {
                 password: values.password,
                 remember: values.remember || false
             });
-            console.log('Login successful:', response);
             if (response && response.token) {
-                console.log('Navigating to home page...');
                 navigate('/', { replace: true });
             } else {
                 setError('登录失败：未收到有效的认证信息');
-                console.error('Login failed: No valid token received');
             }
         } catch (err: any) {
-            console.error('Login error:', err);
             setError(err.message || '登录失败，请检查用户名和密码');
         } finally {
             setLoading(false);

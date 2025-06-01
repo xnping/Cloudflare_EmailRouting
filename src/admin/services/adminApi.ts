@@ -188,25 +188,9 @@ export const adminApi = {
      */
     async testAdminPermission(): Promise<boolean> {
         try {
-            console.log('测试管理员权限...');
-
             const token = localStorage.getItem('token') || sessionStorage.getItem('token');
             if (!token) {
-                console.log('没有Token，无法测试权限');
                 return false;
-            }
-
-            // 解析Token查看用户ID
-            try {
-                const tokenParts = token.split('.');
-                if (tokenParts.length === 3) {
-                    const payload = JSON.parse(atob(tokenParts[1]));
-                    console.log('Token解析结果:', payload);
-                    console.log('Token中的用户ID:', payload.sub || payload.userId || payload.id);
-                    console.log('Token过期时间:', new Date(payload.exp * 1000));
-                }
-            } catch (e) {
-                console.error('Token解析失败:', e);
             }
 
             const headers = {
@@ -215,15 +199,9 @@ export const adminApi = {
             };
 
             // 尝试调用需要管理员权限的接口
-            const response = await backendApi.get('/users', { headers });
-            console.log('管理员权限测试成功:', response);
+            await backendApi.get('/users', { headers });
             return true;
         } catch (error: any) {
-            console.error('管理员权限测试失败:', error);
-            if (error.response?.status === 403) {
-                console.error('权限不足：Token中的用户ID在数据库中不存在，或用户不是管理员');
-                console.error('建议：重新登录或使用有效的管理员账户');
-            }
             return false;
         }
     },
@@ -233,22 +211,15 @@ export const adminApi = {
      */
     async validateTokenAndRelogin(): Promise<boolean> {
         try {
-            console.log('检查Token有效性...');
-
             // 先尝试获取当前用户信息
-            const response = await backendApi.get('/user/info');
-            console.log('Token有效，用户信息:', response);
+            await backendApi.get('/user/info');
             return true;
         } catch (error) {
-            console.error('Token无效:', error);
-
             // 清除无效的认证信息
             localStorage.removeItem('token');
             localStorage.removeItem('user');
             sessionStorage.removeItem('token');
             sessionStorage.removeItem('user');
-
-            console.log('已清除无效的认证信息，请重新登录');
 
             // 重定向到登录页面
             window.location.href = '/login';
@@ -264,12 +235,8 @@ export const adminApi = {
      */
     async getAllUsers(): Promise<AdminUser[]> {
         try {
-            console.log('正在调用 GET /api/users...');
-            console.log('API Base URL:', backendApi.defaults.baseURL);
-
             // 手动获取token并设置请求头
             const token = localStorage.getItem('token') || sessionStorage.getItem('token');
-            console.log('使用Token:', token ? `${token.substring(0, 50)}...` : '无Token');
 
             const headers: any = {
                 'Content-Type': 'application/json'
@@ -279,10 +246,7 @@ export const adminApi = {
                 headers.Authorization = `Bearer ${token}`;
             }
 
-            console.log('请求头:', headers);
-
             const response: ApiResponse<AdminUser[]> = await backendApi.get('/users', { headers });
-            console.log('API响应:', response);
 
             if (response.code !== 200) {
                 throw new Error(response.message || '获取用户列表失败');
@@ -376,11 +340,24 @@ export const adminApi = {
      * 接口: PUT /api/users/{id}
      */
     async updateUser(id: number, data: UpdateUserRequest): Promise<AdminUser> {
-        const response: ApiResponse<AdminUser> = await backendApi.put(`/users/${id}`, data);
-        if (response.code !== 200) {
-            throw new Error(response.message || '更新用户信息失败');
+        try {
+            const response: ApiResponse<AdminUser> = await backendApi.put(`/users/${id}`, data);
+            if (response.code !== 200) {
+                throw new Error(response.message || '更新用户信息失败');
+            }
+            return response.data!;
+        } catch (error: any) {
+            // 处理不同类型的错误
+            if (typeof error === 'string') {
+                throw new Error(error);
+            } else if (error.message) {
+                throw new Error(error.message);
+            } else if (error.code && error.message) {
+                throw new Error(error.message);
+            } else {
+                throw new Error('更新用户信息失败');
+            }
         }
-        return response.data!;
     },
 
     /**
@@ -438,7 +415,6 @@ export const adminApi = {
                     frequency: userData.frequency
                 };
             } catch (err) {
-                console.warn('设置初始频次失败:', err);
                 return response.data!.user;
             }
         }
@@ -1001,22 +977,10 @@ export const adminApi = {
         try {
             // 并行获取各种数据，如果某个接口失败就返回空数组
             const [users, emails, cardCodes, rechargeRecords] = await Promise.all([
-                this.getAllUsers().catch((error) => {
-                    console.warn('Failed to fetch users for dashboard:', error);
-                    return [];
-                }),
-                this.getAllEmails().catch((error) => {
-                    console.warn('Failed to fetch emails for dashboard:', error);
-                    return [];
-                }),
-                this.getAllCardCodes().catch((error) => {
-                    console.warn('Failed to fetch card codes for dashboard:', error);
-                    return [];
-                }),
-                this.getAllRechargeRecords().catch((error) => {
-                    console.warn('Failed to fetch recharge records for dashboard:', error);
-                    return [];
-                })
+                this.getAllUsers().catch(() => []),
+                this.getAllEmails().catch(() => []),
+                this.getAllCardCodes().catch(() => []),
+                this.getAllRechargeRecords().catch(() => [])
             ]);
 
             // 计算统计数据
@@ -1065,7 +1029,6 @@ export const adminApi = {
                 rechargeGrowth
             };
         } catch (error) {
-            console.error('获取仪表板数据失败:', error);
             throw new Error('获取仪表板数据失败');
         }
     },
@@ -1076,11 +1039,9 @@ export const adminApi = {
      */
     async getSystemConfig(): Promise<AdminSystemConfig> {
         try {
-            console.log('获取系统配置...');
             const response: ApiResponse<AdminSystemConfig> = await backendApi.get('/system/config');
 
             if (response.code !== 200) {
-                console.warn('后端未实现系统配置接口，使用默认配置');
                 // 如果后端未实现，返回默认配置
                 return {
                     siteName: 'Cloudflare 邮件路由管理系统',
@@ -1097,7 +1058,6 @@ export const adminApi = {
 
             return response.data!;
         } catch (error) {
-            console.warn('获取系统配置失败，使用默认配置:', error);
             // 如果API调用失败，返回默认配置
             return {
                 siteName: 'Cloudflare 邮件路由管理系统',
@@ -1119,19 +1079,14 @@ export const adminApi = {
      */
     async updateSystemConfig(config: AdminSystemConfig): Promise<AdminSystemConfig> {
         try {
-            console.log('更新系统配置:', config);
-
             const response: ApiResponse<AdminSystemConfig> = await backendApi.put('/system/config', config);
 
             if (response.code !== 200) {
                 throw new Error(response.message || '更新系统配置失败');
             }
 
-            console.log('系统配置更新成功');
             return response.data!;
         } catch (error: any) {
-            console.error('更新系统配置失败:', error);
-
             // 如果后端未实现此接口，提供友好的错误信息
             if (error.response?.status === 404) {
                 throw new Error('后端暂未实现系统配置保存功能，请联系管理员');
@@ -1147,22 +1102,16 @@ export const adminApi = {
      */
     async resetSystemConfig(): Promise<AdminSystemConfig> {
         try {
-            console.log('重置系统配置...');
-
             const response: ApiResponse<AdminSystemConfig> = await backendApi.post('/system/config/reset');
 
             if (response.code !== 200) {
                 throw new Error(response.message || '重置系统配置失败');
             }
 
-            console.log('系统配置重置成功');
             return response.data!;
         } catch (error: any) {
-            console.error('重置系统配置失败:', error);
-
             // 如果后端未实现此接口，返回默认配置
             if (error.response?.status === 404) {
-                console.warn('后端未实现重置接口，返回默认配置');
                 return this.getSystemConfig();
             }
 

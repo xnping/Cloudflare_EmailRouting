@@ -35,7 +35,6 @@ const ModernRechargeManagement: React.FC = () => {
       setRechargeRecords(response.records);
       setTotal(response.total);
     } catch (err) {
-      console.error('加载充值记录失败:', err);
       setError(err instanceof Error ? err.message : '加载充值记录失败');
     } finally {
       setLoading(false);
@@ -85,7 +84,6 @@ const ModernRechargeManagement: React.FC = () => {
       await loadRechargeRecords(); // 重新加载数据
       setSelectedRecords(prev => prev.filter(id => id !== recordId));
     } catch (err) {
-      console.error('删除充值记录失败:', err);
       alert(err instanceof Error ? err.message : '删除充值记录失败');
     } finally {
       setLoading(false);
@@ -102,7 +100,6 @@ const ModernRechargeManagement: React.FC = () => {
       await loadRechargeRecords(); // 重新加载数据
       setSelectedRecords([]);
     } catch (err) {
-      console.error('批量删除充值记录失败:', err);
       alert(err instanceof Error ? err.message : '批量删除充值记录失败');
     } finally {
       setLoading(false);
@@ -131,7 +128,6 @@ const ModernRechargeManagement: React.FC = () => {
       setShowRechargeModal(false);
       await loadRechargeRecords(); // 重新加载数据
     } catch (err) {
-      console.error('管理员充值失败:', err);
       alert(err instanceof Error ? err.message : '管理员充值失败');
     } finally {
       setLoading(false);

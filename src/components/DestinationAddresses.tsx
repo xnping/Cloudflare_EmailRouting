@@ -44,10 +44,8 @@ const DestinationAddresses: React.FC = () => {
         try {
             setLoading(true);
             const data = await cloudflareApi.getDestinationAddresses();
-            console.log('Fetched destination addresses:', data);
             setAddresses(Array.isArray(data) ? data : []);
         } catch (error: any) {
-            console.error('Error in fetchAddresses:', error);
             message.error(error.message || '获取目标地址失败');
         } finally {
             setLoading(false);
@@ -72,7 +70,6 @@ const DestinationAddresses: React.FC = () => {
             fetchAddresses();
         } catch (error: any) {
             message.error(error.message || '创建失败');
-            console.error(error);
         } finally {
             setLoading(false);
         }
@@ -93,7 +90,6 @@ const DestinationAddresses: React.FC = () => {
                     fetchAddresses();
                 } catch (error: any) {
                     message.error(error.message || '删除失败');
-                    console.error(error);
                 } finally {
                     setLoading(false);
                 }

@@ -42,7 +42,6 @@ const ModernSystemSettings: React.FC = () => {
       setConfig(configData);
       setSystemStatus(statusData);
     } catch (err) {
-      console.error('加载系统配置失败:', err);
       setError(err instanceof Error ? err.message : '加载系统配置失败');
     } finally {
       setLoading(false);
@@ -64,15 +63,12 @@ const ModernSystemSettings: React.FC = () => {
   const handleSave = async () => {
     try {
       setSaving(true);
-      console.log('开始保存系统配置...');
 
       const updatedConfig = await adminApi.updateSystemConfig(config);
       setConfig(updatedConfig);
 
-      console.log('系统配置保存成功');
       alert('✅ 设置保存成功！');
     } catch (err) {
-      console.error('保存设置失败:', err);
       const errorMessage = err instanceof Error ? err.message : '保存设置失败';
 
       if (errorMessage.includes('后端暂未实现')) {
@@ -90,15 +86,12 @@ const ModernSystemSettings: React.FC = () => {
 
     try {
       setSaving(true);
-      console.log('开始重置系统配置...');
 
       const resetConfig = await adminApi.resetSystemConfig();
       setConfig(resetConfig);
 
-      console.log('系统配置重置成功');
       alert('✅ 设置重置成功！所有配置已恢复到默认值。');
     } catch (err) {
-      console.error('重置设置失败:', err);
       const errorMessage = err instanceof Error ? err.message : '重置设置失败';
 
       if (errorMessage.includes('后端未实现')) {

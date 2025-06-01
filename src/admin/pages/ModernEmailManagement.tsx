@@ -33,23 +33,15 @@ const ModernEmailManagement: React.FC = () => {
     try {
       setLoading(true);
       setError(null);
-      console.log('开始加载邮件数据...');
       const response = await adminApi.getEmails({
         page: currentPage,
         pageSize,
         search: searchTerm,
         status: filterStatus === 'all' ? undefined : filterStatus
       });
-      console.log('邮件数据加载成功:', response);
       setEmails(response.emails);
       setTotal(response.total);
     } catch (err) {
-      console.error('加载邮件数据失败:', err);
-      console.error('错误详情:', {
-        message: err instanceof Error ? err.message : '未知错误',
-        stack: err instanceof Error ? err.stack : undefined,
-        response: err
-      });
       setError(err instanceof Error ? err.message : '加载邮件数据失败');
     } finally {
       setLoading(false);

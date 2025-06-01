@@ -35,7 +35,6 @@ const ModernCardCodeManagement: React.FC = () => {
       setCardCodes(response.cardCodes);
       setTotal(response.total);
     } catch (err) {
-      console.error('加载卡密数据失败:', err);
       setError(err instanceof Error ? err.message : '加载卡密数据失败');
     } finally {
       setLoading(false);
@@ -84,7 +83,6 @@ const ModernCardCodeManagement: React.FC = () => {
       await adminApi.updateCardCode(codeId, { status: 'disabled' });
       await loadCardCodes(); // 重新加载数据
     } catch (err) {
-      console.error('禁用卡密失败:', err);
       alert(err instanceof Error ? err.message : '禁用卡密失败');
     } finally {
       setLoading(false);
@@ -100,7 +98,6 @@ const ModernCardCodeManagement: React.FC = () => {
       await loadCardCodes(); // 重新加载数据
       setSelectedCodes(prev => prev.filter(id => id !== codeId));
     } catch (err) {
-      console.error('删除卡密失败:', err);
       alert(err instanceof Error ? err.message : '删除卡密失败');
     } finally {
       setLoading(false);
@@ -117,7 +114,6 @@ const ModernCardCodeManagement: React.FC = () => {
       await loadCardCodes(); // 重新加载数据
       setSelectedCodes([]);
     } catch (err) {
-      console.error('批量删除卡密失败:', err);
       alert(err instanceof Error ? err.message : '批量删除卡密失败');
     } finally {
       setLoading(false);
@@ -142,7 +138,6 @@ const ModernCardCodeManagement: React.FC = () => {
       setShowGenerateModal(false);
       await loadCardCodes(); // 重新加载数据
     } catch (err) {
-      console.error('生成卡密失败:', err);
       alert(err instanceof Error ? err.message : '生成卡密失败');
     } finally {
       setLoading(false);
