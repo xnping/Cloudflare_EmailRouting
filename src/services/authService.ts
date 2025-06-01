@@ -1,15 +1,15 @@
 import axios from 'axios';
 import type { ApiResponse, AuthResponseData, LoginRequest, RegisterRequest, User, BackendUser } from '../types/auth';
 import { cloudflareApi } from './cloudflareApi';
+import { API_CONFIG } from '../config';
 
-// API地址 - 更新为远程服务器地址
-const API_URL = 'http://127.0.0.1:5000/api';
-
-// 创建axios实例
+// 创建axios实例 - 使用统一配置
 const api = axios.create({
-    baseURL: API_URL,
+    baseURL: API_CONFIG.BASE_URL,
+    timeout: API_CONFIG.TIMEOUT,
+    withCredentials: API_CONFIG.CORS.withCredentials,
     headers: {
-        'Content-Type': 'application/json'
+        ...API_CONFIG.CORS.headers,
     }
 });
 

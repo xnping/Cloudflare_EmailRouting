@@ -5,8 +5,9 @@ import { API_CONFIG, CLOUDFLARE_CONFIG } from '../config';
 export const backendApi: AxiosInstance = axios.create({
     baseURL: API_CONFIG.BASE_URL,
     timeout: API_CONFIG.TIMEOUT,
+    withCredentials: API_CONFIG.CORS.withCredentials,
     headers: {
-        'Content-Type': 'application/json',
+        ...API_CONFIG.CORS.headers,
     },
 });
 

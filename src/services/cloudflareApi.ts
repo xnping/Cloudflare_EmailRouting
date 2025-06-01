@@ -32,7 +32,7 @@ validateConfig();
 
 // 主要的 API 实例（使用 Bearer Token）
 const api = axios.create({
-    baseURL: import.meta.env.DEV ? '/cloudflare-api' : 'https://api.cloudflare.com/client/v4',
+    baseURL: CLOUDFLARE_CONFIG.BASE_URL,
     headers: {
         'Authorization': `Bearer ${CLOUDFLARE_CONFIG.API_TOKEN}`,
         'Content-Type': 'application/json',
@@ -43,7 +43,7 @@ const api = axios.create({
 
 // 专门用于目标地址管理的 API 实例（使用 Email + API Key）
 const destinationApi = axios.create({
-    baseURL: import.meta.env.DEV ? '/cloudflare-api' : 'https://api.cloudflare.com/client/v4',
+    baseURL: CLOUDFLARE_CONFIG.BASE_URL,
     headers: {
         'X-Auth-Email': CLOUDFLARE_CONFIG.API_EMAIL,
         'X-Auth-Key': CLOUDFLARE_CONFIG.API_KEY,
