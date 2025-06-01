@@ -171,10 +171,10 @@ const ModernCardCodeManagement: React.FC = () => {
   };
 
   const getStats = () => {
-    const active = cardCodes.filter(c => c.status === 'unused' || c.status === 'active').length;
+    const active = cardCodes.filter(c => c.status === 'unused').length;
     const used = cardCodes.filter(c => c.status === 'used').length;
     const disabled = cardCodes.filter(c => c.status === 'disabled').length;
-    const totalValue = cardCodes.filter(c => c.status === 'unused' || c.status === 'active').reduce((sum, c) => sum + c.value, 0);
+    const totalValue = cardCodes.filter(c => c.status === 'unused').reduce((sum, c) => sum + c.value, 0);
 
     return { total, active, used, disabled, totalValue };
   };
@@ -400,7 +400,7 @@ const ModernCardCodeManagement: React.FC = () => {
                   </td>
                   <td>
                     <div className="action-buttons">
-                      {(code.status === 'unused' || code.status === 'active') && (
+                      {code.status === 'unused' && (
                         <button
                           className="action-btn disable"
                           onClick={() => handleDisableCode(code.id)}

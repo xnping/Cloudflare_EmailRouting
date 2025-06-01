@@ -177,7 +177,7 @@ export const adminApi = {
                 headers.Authorization = `Bearer ${token}`;
             }
 
-            const response = await backendApi.get('/user/info', { headers });
+            await backendApi.get('/user/info', { headers });
         } catch (error) {
             throw error;
         }
@@ -218,7 +218,7 @@ export const adminApi = {
             const response = await backendApi.get('/users', { headers });
             console.log('管理员权限测试成功:', response);
             return true;
-        } catch (error) {
+        } catch (error: any) {
             console.error('管理员权限测试失败:', error);
             if (error.response?.status === 403) {
                 console.error('权限不足：Token中的用户ID在数据库中不存在，或用户不是管理员');
@@ -288,14 +288,8 @@ export const adminApi = {
                 throw new Error(response.message || '获取用户列表失败');
             }
             return response.data || [];
-        } catch (error) {
-            console.error('API调用失败:', error);
+        } catch (error: any) {
             if (error.response) {
-                console.error('响应状态:', error.response.status);
-                console.error('响应数据:', error.response.data);
-                console.error('响应头:', error.response.headers);
-
-                // 根据状态码提供更具体的错误信息
                 if (error.response.status === 401) {
                     throw new Error('认证失败，请重新登录');
                 } else if (error.response.status === 403) {
@@ -308,11 +302,8 @@ export const adminApi = {
                     throw new Error(error.response.data?.message || `请求失败 (${error.response.status})`);
                 }
             } else if (error.request) {
-                console.error('请求配置:', error.request);
-                console.error('网络错误或服务器无响应');
                 throw new Error('网络连接失败，请检查后端服务是否正常运行');
             } else {
-                console.error('请求设置错误:', error.message);
                 throw new Error('请求配置错误: ' + error.message);
             }
         }
@@ -527,7 +518,7 @@ export const adminApi = {
         search?: string;
         status?: string;
     } = {}): Promise<{ emails: AdminEmailRecord[]; total: number }> {
-        const { page = 1, pageSize = 10, search, status } = params;
+        const { page = 1, pageSize = 10, search } = params;
 
         // 获取所有邮件记录
         const allEmails = await this.getAllEmails();

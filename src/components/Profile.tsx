@@ -15,8 +15,7 @@ import {
     Form,
     Input,
     message,
-    Table,
-    Tabs
+    Table
 } from 'antd';
 import {
     UserOutlined,
