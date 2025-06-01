@@ -8,7 +8,7 @@ const ModernRechargeManagement: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedRecords, setSelectedRecords] = useState<number[]>([]);
-  const [showModal, setShowModal] = useState(false);
+  // const [showModal, setShowModal] = useState(false);
   const [filterType, setFilterType] = useState<string>('all');
   const [showRechargeModal, setShowRechargeModal] = useState(false);
   const [rechargeForm, setRechargeForm] = useState({

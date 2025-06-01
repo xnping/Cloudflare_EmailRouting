@@ -8,7 +8,7 @@ const ModernCardCodeManagement: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCodes, setSelectedCodes] = useState<number[]>([]);
-  const [showModal, setShowModal] = useState(false);
+  // const [showModal, setShowModal] = useState(false);
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [showGenerateModal, setShowGenerateModal] = useState(false);
   const [generateForm, setGenerateForm] = useState({

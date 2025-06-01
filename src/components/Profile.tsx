@@ -36,7 +36,6 @@ import { userService, type CardRechargeRequest, type RechargeRecord } from '../s
 import type { User } from '../types/auth';
 
 const { Title, Text } = Typography;
-const { TabPane } = Tabs;
 
 const Profile: React.FC = () => {
     const navigate = useNavigate();

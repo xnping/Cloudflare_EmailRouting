@@ -8,8 +8,8 @@ const ModernUserManagement: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
-  const [showModal, setShowModal] = useState(false);
-  const [editingUser, setEditingUser] = useState<AdminUser | null>(null);
+  // const [showModal, setShowModal] = useState(false);
+  // const [editingUser, setEditingUser] = useState<AdminUser | null>(null);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [createForm, setCreateForm] = useState({
     username: '',

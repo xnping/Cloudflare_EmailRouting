@@ -8,8 +8,8 @@ const ModernEmailManagement: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedEmails, setSelectedEmails] = useState<number[]>([]);
-  const [showModal, setShowModal] = useState(false);
-  const [editingEmail, setEditingEmail] = useState<AdminEmailRecord | null>(null);
+  // const [showModal, setShowModal] = useState(false);
+  // const [editingEmail, setEditingEmail] = useState<AdminEmailRecord | null>(null);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [createForm, setCreateForm] = useState({
     userId: '',
