@@ -1,0 +1,288 @@
+/* 认证页面的自定义样式 - 桌面版优化 */
+
+/* 渐变背景动画 - 全屏设置 */
+.auth-background {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-size: 400% 400%;
+  animation: gradientShift 20s ease infinite;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+}
+
+/* 添加几何装饰元素 */
+.auth-background::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* 卡片悬浮效果 - 桌面版优化 */
+.auth-card {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+}
+
+.auth-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+}
+
+/* 输入框聚焦效果 */
+.ant-input:focus,
+.ant-input-password:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+}
+
+/* 按钮悬浮效果 */
+.auth-button {
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.auth-button:hover::before {
+  left: 100%;
+}
+
+/* Logo 旋转动画 */
+.auth-logo {
+  animation: logoFloat 3s ease-in-out infinite;
+}
+
+@keyframes logoFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* 表单项动画 */
+.ant-form-item {
+  animation: slideInUp 0.6s ease forwards;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.ant-form-item:nth-child(1) { animation-delay: 0.1s; }
+.ant-form-item:nth-child(2) { animation-delay: 0.2s; }
+.ant-form-item:nth-child(3) { animation-delay: 0.3s; }
+.ant-form-item:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes slideInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 错误提示动画 */
+.ant-alert {
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* 桌面端优化 */
+@media (min-width: 1200px) {
+  .auth-card {
+    max-width: 480px !important;
+    padding: 20px;
+  }
+
+  .auth-card .ant-card-body {
+    padding: 60px 48px !important;
+  }
+
+  .auth-logo {
+    font-size: 64px !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+  .auth-card {
+    max-width: 420px !important;
+  }
+
+  .auth-card .ant-card-body {
+    padding: 48px 40px !important;
+  }
+}
+
+/* 移动端适配（保留基本支持） */
+@media (max-width: 767px) {
+  .auth-card {
+    margin: 20px;
+    max-width: 360px !important;
+  }
+
+  .auth-card .ant-card-body {
+    padding: 32px 24px !important;
+  }
+
+  .auth-background::before {
+    display: none;
+  }
+}
+
+/* 桌面端特有交互效果 */
+.desktop-only {
+  cursor: pointer;
+}
+
+/* 输入框桌面端优化 */
+.ant-input,
+.ant-input-password {
+  transition: all 0.3s ease;
+}
+
+.ant-input:hover,
+.ant-input-password:hover {
+  border-color: #667eea;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+}
+
+/* 按钮桌面端优化 */
+.auth-button {
+  cursor: pointer;
+  user-select: none;
+}
+
+.auth-button:active {
+  transform: scale(0.98);
+}
+
+/* 链接悬浮效果 */
+.ant-btn-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* 表单标签优化 */
+.ant-form-item-label {
+  font-weight: 500;
+}
+
+/* 卡片内容区域优化 */
+.auth-card .ant-space {
+  width: 100%;
+}
+
+/* 标题渐变效果 */
+.auth-title {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* 加载状态优化 */
+.ant-btn-loading {
+  position: relative;
+  overflow: hidden;
+}
+
+.ant-btn-loading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: inherit;
+}
+
+/* 桌面端键盘导航优化 */
+.ant-input:focus-visible,
+.ant-btn:focus-visible {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
+/* 记住我复选框样式优化 */
+.ant-checkbox-wrapper {
+  transition: all 0.3s ease;
+}
+
+.ant-checkbox-wrapper:hover {
+  color: #667eea !important;
+}
+
+.ant-checkbox-checked .ant-checkbox-inner {
+  background-color: #667eea;
+  border-color: #667eea;
+}
+
+.ant-checkbox:hover .ant-checkbox-inner {
+  border-color: #667eea;
+}
+
+.ant-checkbox-wrapper span:last-child {
+  user-select: none;
+}
+
+/* 记住我复选框动画 */
+.ant-checkbox-wrapper {
+  animation: slideInUp 0.6s ease forwards;
+  animation-delay: 0.35s;
+  opacity: 0;
+  transform: translateY(30px);
+}

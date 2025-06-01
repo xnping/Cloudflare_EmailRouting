@@ -1,0 +1,672 @@
+/* 现代化充值管理样式 */
+.modern-recharge-management {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* 页面头部 */
+.page-header {
+  margin-bottom: 32px;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.page-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+}
+
+.page-subtitle {
+  color: #6b7280;
+  font-size: 16px;
+  margin: 0;
+}
+
+.header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+/* 按钮样式 */
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn-secondary {
+  background: #f3f4f6;
+  color: #374151;
+  border: 1px solid #d1d5db;
+}
+
+.btn-secondary:hover {
+  background: #e5e7eb;
+}
+
+.btn-danger {
+  background: #ef4444;
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #dc2626;
+}
+
+/* 统计卡片样式 */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e5e7eb;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.stat-card .stat-icon {
+  font-size: 32px;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.stat-title {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0 0 8px 0;
+  font-weight: 500;
+}
+
+.stat-value {
+  font-size: 32px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 12px;
+}
+
+.stat-trend {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.trend {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.trend.positive {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.trend.neutral {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.trend-label {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+/* 工具栏 */
+.toolbar {
+  background: white;
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex: 1;
+}
+
+.toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* 搜索框 */
+.search-box {
+  position: relative;
+  min-width: 300px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+  font-size: 16px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 12px 10px 40px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+/* 筛选按钮 */
+.filter-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.filter-btn {
+  padding: 8px 16px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filter-btn:hover {
+  background: #f3f4f6;
+}
+
+.filter-btn.active {
+  background: #667eea;
+  color: white;
+  border-color: #667eea;
+}
+
+/* 表格容器 */
+.table-container {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e5e7eb;
+  margin-bottom: 24px;
+}
+
+/* 现代化表格 */
+.modern-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.modern-table th {
+  background: #f9fafb;
+  padding: 16px 20px;
+  text-align: left;
+  font-weight: 600;
+  color: #374151;
+  font-size: 14px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.modern-table td {
+  padding: 16px 20px;
+  border-bottom: 1px solid #f3f4f6;
+  vertical-align: middle;
+}
+
+.modern-table tr:hover {
+  background: #f9fafb;
+}
+
+.modern-table tr.selected {
+  background: #eff6ff;
+}
+
+/* 复选框 */
+.checkbox {
+  width: 16px;
+  height: 16px;
+  accent-color: #667eea;
+  cursor: pointer;
+}
+
+/* 用户信息 */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.user-name {
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 2px;
+}
+
+.user-id {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+/* 充值金额样式 */
+.amount-info {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.amount-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: #059669;
+}
+
+.amount-unit {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* 充值类型徽章 */
+.type-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.type-badge.type-card {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.type-badge.type-admin {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.type-badge.type-unknown {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+/* 描述信息 */
+.description-info {
+  font-size: 13px;
+  color: #6b7280;
+  max-width: 200px;
+  word-break: break-word;
+}
+
+/* 管理员信息 */
+.admin-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.admin-name {
+  font-size: 13px;
+  color: #1f2937;
+  font-weight: 500;
+}
+
+.admin-id {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.system-auto {
+  font-size: 13px;
+  color: #6b7280;
+  font-style: italic;
+}
+
+/* 日期信息 */
+.date-info {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* 操作按钮样式 */
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.action-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.action-btn.delete {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.action-btn.delete:hover {
+  background: #fee2e2;
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.empty-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.empty-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 8px;
+}
+
+.empty-description {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* 分页 */
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 16px 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e5e7eb;
+}
+
+.pagination-info {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.pagination-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.page-btn {
+  padding: 8px 12px;
+  border: 1px solid #e5e7eb;
+  background: white;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.page-btn:hover:not(:disabled) {
+  background: #f9fafb;
+}
+
+.page-btn.active {
+  background: #667eea;
+  color: white;
+  border-color: #667eea;
+}
+
+.page-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* 响应式设计 */
+@media (max-width: 1024px) {
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .toolbar-left {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .search-box {
+    min-width: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .description-info {
+    max-width: none;
+  }
+
+  .modern-table {
+    font-size: 13px;
+  }
+
+  .modern-table th,
+  .modern-table td {
+    padding: 12px 16px;
+  }
+
+  .pagination {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+/* 模态框样式 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideIn 0.3s ease-out;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 24px 0 24px;
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 24px;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.modal-body {
+  padding: 0 24px;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 24px;
+  border-top: 1px solid #e5e7eb;
+  margin-top: 24px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #374151;
+  font-size: 14px;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  background: white;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* 模态框动画 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

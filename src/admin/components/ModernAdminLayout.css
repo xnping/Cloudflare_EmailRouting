@@ -1,0 +1,477 @@
+/* 现代化管理后台布局样式 */
+.modern-admin-layout {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  background: #f5f7fa;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* 侧边栏样式 */
+.sidebar {
+  width: 280px;
+  min-width: 280px;
+  max-width: 280px;
+  background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 100;
+  flex-shrink: 0;
+}
+
+.sidebar.collapsed {
+  width: 80px;
+  min-width: 80px;
+  max-width: 80px;
+}
+
+.sidebar-header {
+  padding: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 60px; /* 确保有足够的高度 */
+}
+
+/* 收缩状态下的头部布局 */
+.sidebar.collapsed .sidebar-header {
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 12px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-icon {
+  font-size: 24px;
+  flex-shrink: 0; /* 防止图标被压缩 */
+}
+
+.logo-text {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* 收缩状态下的logo */
+.sidebar.collapsed .logo {
+  justify-content: center;
+}
+
+.sidebar.collapsed .logo-icon {
+  font-size: 20px;
+}
+
+.collapse-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0; /* 防止按钮被压缩 */
+  position: relative;
+  z-index: 10;
+}
+
+.collapse-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.05);
+}
+
+/* 确保收缩状态下按钮仍然可见 */
+.sidebar.collapsed .collapse-btn {
+  width: 36px;
+  height: 36px;
+  margin: 0 auto;
+}
+
+/* 导航样式 */
+.sidebar-nav {
+  flex: 1;
+  padding: 20px 0;
+}
+
+.nav-item {
+  width: 100%;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 15px;
+  border-radius: 0 25px 25px 0;
+  margin: 2px 0;
+  margin-right: 12px;
+}
+
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.nav-item.active {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateX(8px);
+}
+
+.nav-icon {
+  font-size: 20px;
+  min-width: 20px;
+}
+
+.nav-label {
+  font-weight: 600;
+  letter-spacing: 0.025em;
+}
+
+.sidebar-footer {
+  padding: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.back-to-frontend-btn,
+.logout-btn {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s;
+  font-size: 14px;
+}
+
+/* 收缩状态下的底部按钮样式 */
+.sidebar.collapsed .back-to-frontend-btn,
+.sidebar.collapsed .logout-btn {
+  width: 48px;
+  height: 48px;
+  padding: 12px;
+  justify-content: center;
+  margin: 0 auto;
+  border-radius: 8px;
+}
+
+.sidebar.collapsed .back-to-frontend-btn .nav-icon,
+.sidebar.collapsed .logout-btn .nav-icon {
+  font-size: 18px;
+  margin: 0;
+}
+
+.sidebar.collapsed .sidebar-footer {
+  padding: 16px 8px;
+  gap: 12px;
+}
+
+.back-to-frontend-btn:hover {
+  background: rgba(76, 175, 80, 0.3);
+  color: white;
+}
+
+.logout-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+/* 收缩状态下的悬停效果 */
+.sidebar.collapsed .back-to-frontend-btn:hover {
+  background: rgba(76, 175, 80, 0.4);
+  transform: scale(1.05);
+}
+
+.sidebar.collapsed .logout-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+/* 主内容区样式 */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+  background: #f5f7fa;
+  width: calc(100vw - 280px);
+}
+
+/* 折叠状态下的主内容区 */
+.sidebar.collapsed + .main-content {
+  width: calc(100vw - 80px);
+}
+
+.top-header {
+  background: white;
+  padding: 0 40px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border-bottom: 1px solid #e8eaed;
+  position: relative;
+  z-index: 50;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #374151;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.mobile-menu-btn:hover {
+  background: #f3f4f6;
+}
+
+.page-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+  letter-spacing: -0.025em;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header-back-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(76, 175, 80, 0.2);
+}
+
+.header-back-btn:hover {
+  background: linear-gradient(135deg, #45a049 0%, #4caf50 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);
+}
+
+.header-back-btn .btn-icon {
+  font-size: 16px;
+}
+
+.header-back-btn .btn-text {
+  font-weight: 500;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  background: #f8f9fa;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.user-info:hover {
+  background: #e9ecef;
+}
+
+.user-avatar {
+  font-size: 18px;
+}
+
+.user-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #495057;
+}
+
+/* 页面内容样式 */
+.page-content {
+  flex: 1;
+  padding: 40px;
+  overflow-y: auto;
+  background: #f5f7fa;
+  height: calc(100vh - 80px); /* 固定高度 */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 桌面端优化 */
+@media (min-width: 1200px) {
+  .sidebar {
+    width: 320px;
+    min-width: 320px;
+    max-width: 320px;
+  }
+
+  .sidebar.collapsed {
+    width: 80px;
+    min-width: 80px;
+    max-width: 80px;
+  }
+
+  .main-content {
+    width: calc(100vw - 320px);
+  }
+
+  .sidebar.collapsed + .main-content {
+    width: calc(100vw - 80px);
+  }
+
+  .page-content {
+    padding: 50px;
+  }
+}
+
+/* 响应式设计 */
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 260px;
+    min-width: 260px;
+    max-width: 260px;
+  }
+
+  .sidebar.collapsed {
+    width: 80px;
+    min-width: 80px;
+    max-width: 80px;
+  }
+
+  .main-content {
+    width: calc(100vw - 260px);
+  }
+
+  .sidebar.collapsed + .main-content {
+    width: calc(100vw - 80px);
+  }
+}
+
+@media (max-width: 768px) {
+  .mobile-menu-btn {
+    display: block;
+  }
+
+  /* 收缩状态下隐藏移动菜单按钮 */
+  .sidebar.collapsed ~ .main-content .mobile-menu-btn {
+    display: none;
+  }
+
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+    height: 100vh;
+    width: 280px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .sidebar:not(.collapsed) {
+    transform: translateX(0);
+  }
+
+  /* 移动端收缩状态 */
+  .sidebar.collapsed {
+    width: 80px;
+    transform: translateX(0); /* 收缩状态下仍然显示 */
+  }
+
+  .main-content {
+    width: 100vw;
+    flex: 1;
+  }
+
+  /* 移动端收缩状态下的主内容区 */
+  .sidebar.collapsed + .main-content {
+    width: calc(100vw - 80px);
+    margin-left: 80px;
+  }
+
+  .top-header {
+    padding: 0 20px;
+    height: 60px;
+  }
+
+  .page-title {
+    font-size: 18px;
+  }
+
+  .page-content {
+    padding: 20px;
+    min-height: calc(100vh - 60px);
+  }
+
+  /* 移动端隐藏返回前台按钮的文字 */
+  .header-back-btn .btn-text {
+    display: none;
+  }
+
+  .header-back-btn {
+    padding: 8px 12px;
+    min-width: auto;
+  }
+
+  /* 移动端遮罩层 */
+  .sidebar:not(.collapsed)::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 280px;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+  }
+}
