@@ -1,4 +1,4 @@
-name: Build Project
+name: Build and Release
 
 on:
   push:
@@ -25,9 +25,65 @@ jobs:
         npm install
         npm run build
 
+    - name: Create dist archive
+      run: |
+        cd dist
+        zip -r ../cloudflare-email-routing-dist.zip .
+        cd ..
+
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
         name: dist-files
         path: dist/
         retention-days: 30
+
+    - name: Generate release tag
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      id: tag
+      run: |
+        echo "tag=v$(date +'%Y%m%d-%H%M%S')" >> $GITHUB_OUTPUT
+
+    - name: Create Release
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ steps.tag.outputs.tag }}
+        release_name: Cloudflare Email Routing ${{ steps.tag.outputs.tag }}
+        body: |
+          ## 🚀 Cloudflare 邮件路由管理系统
+
+          ### 📦 部署文件
+          下载 `cloudflare-email-routing-dist.zip` 文件，解压后上传到你的服务器即可。
+
+          ### ✨ 功能特性
+          - 完整的前端 React 应用
+          - 用户认证和权限管理
+          - 邮件转发规则管理
+          - 管理员后台系统
+          - 响应式设计，支持移动端
+
+          ### 🔧 部署说明
+          1. 下载并解压 `cloudflare-email-routing-dist.zip`
+          2. 将解压后的文件上传到你的 Web 服务器
+          3. 确保服务器支持 SPA 路由（配置 fallback 到 index.html）
+          4. 访问你的域名即可使用
+
+          ---
+          构建时间: ${{ steps.tag.outputs.tag }}
+        draft: false
+        prerelease: false
+      id: create_release
+
+    - name: Upload Release Asset
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./cloudflare-email-routing-dist.zip
+        asset_name: cloudflare-email-routing-dist.zip
+        asset_content_type: application/zip
