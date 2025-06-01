@@ -243,7 +243,6 @@ const Profile: React.FC = () => {
                                 <Tag
                                     color={getPermissionColor(user?.permissions || 'user')}
                                     icon={getPermissionIcon(user?.permissions || 'user')}
-                                    size="small"
                                 >
                                     {user?.permissions === 'admin' ? '管理员' : '普通用户'}
                                 </Tag>
@@ -375,7 +374,7 @@ const Profile: React.FC = () => {
                             key: 'type',
                             width: 80,
                             render: (type: string) => (
-                                <Tag color={type === 'card' ? 'blue' : 'green'} size="small">
+                                <Tag color={type === 'card' ? 'blue' : 'green'}>
                                     {type === 'card' ? '卡密' : '管理员'}
                                 </Tag>
                             ),

@@ -133,19 +133,17 @@ const EmailRouting: React.FC = () => {
                     throw new Error('配额不足，无法创建邮件转发');
                 }
 
-                let cloudflareCreated = false;
-                let databaseCreated = false;
+                // let cloudflareCreated = false;
+                // let databaseCreated = false;
 
                 try {
                     await cloudflareApi.createDestination(values.customPrefix, forwardTo);
-                    cloudflareCreated = true;
 
                     await emailService.createEmailRecord({
                         userId: currentUser.id,
                         email: customEmail,
                         toEmail: forwardTo
                     });
-                    databaseCreated = true;
 
                     const updatedUser = await userService.consumeQuota(currentUser.id, currentUser.frequency || 0);
 
