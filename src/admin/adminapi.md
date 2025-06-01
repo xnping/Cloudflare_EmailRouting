@@ -938,7 +938,7 @@ curl -X POST http://45.204.6.32:5000/api/user/1/frequency/increment \
 
 ```bash
 # 1. 创建邮箱记录（会自动扣减frequency）
-curl -X POST http://localhost:5000/api/emails \
+curl -X POST http://45.204.6.32:5000/api/emails \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -d '{
@@ -948,19 +948,19 @@ curl -X POST http://localhost:5000/api/emails \
   }'
 
 # 2. 获取所有邮箱记录
-curl -X GET http://localhost:5000/api/emails \
+curl -X GET http://45.204.6.32:5000/api/emails \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 
 # 3. 分页查询邮箱记录
-curl -X GET "http://localhost:5000/api/emails/page?pageNum=1&pageSize=5" \
+curl -X GET "http://45.204.6.32:5000/api/emails/page?pageNum=1&pageSize=5" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 
 # 4. 根据用户ID查询邮箱记录
-curl -X GET http://localhost:5000/api/emails/user/1 \
+curl -X GET http://45.204.6.32:5000/api/emails/user/1 \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 
 # 5. 更新邮箱记录
-curl -X PUT http://localhost:5000/api/emails/1 \
+curl -X PUT http://45.204.6.32:5000/api/emails/1 \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -d '{
@@ -970,11 +970,11 @@ curl -X PUT http://localhost:5000/api/emails/1 \
   }'
 
 # 6. 删除邮箱记录
-curl -X DELETE http://localhost:5000/api/emails/1 \
+curl -X DELETE http://45.204.6.32:5000/api/emails/1 \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 
 # 7. 批量删除邮箱记录
-curl -X DELETE http://localhost:5000/api/emails/batch \
+curl -X DELETE http://45.204.6.32:5000/api/emails/batch \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -d '[1, 2, 3]'
@@ -984,15 +984,15 @@ curl -X DELETE http://localhost:5000/api/emails/batch \
 
 ```bash
 # 1. 获取所有用户列表
-curl -X GET http://localhost:5000/api/users \
+curl -X GET http://45.204.6.32:5000/api/users \
   -H "Authorization: Bearer ADMIN_TOKEN"
 
 # 2. 分页获取用户列表
-curl -X GET "http://localhost:5000/api/users/page?pageNum=1&pageSize=10" \
+curl -X GET "http://45.204.6.32:5000/api/users/page?pageNum=1&pageSize=10" \
   -H "Authorization: Bearer ADMIN_TOKEN"
 
 # 3. 更新用户权限
-curl -X PUT http://localhost:5000/api/user/permissions \
+curl -X PUT http://45.204.6.32:5000/api/user/permissions \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer ADMIN_TOKEN" \
   -d '{
@@ -1001,11 +1001,11 @@ curl -X PUT http://localhost:5000/api/user/permissions \
   }'
 
 # 4. 删除用户
-curl -X DELETE http://localhost:5000/api/users/2 \
+curl -X DELETE http://45.204.6.32:5000/api/users/2 \
   -H "Authorization: Bearer ADMIN_TOKEN"
 
 # 5. 批量删除用户
-curl -X DELETE http://localhost:5000/api/users/batch \
+curl -X DELETE http://45.204.6.32:5000/api/users/batch \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer ADMIN_TOKEN" \
   -d '[2, 3, 4]'
