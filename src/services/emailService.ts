@@ -36,7 +36,7 @@ export const emailService = {
             console.log('Testing backend API connection...');
             const response = await backendApi.get('/health');
             console.log('Backend API health check response:', response);
-            return response.code === 200;
+            return response.data?.code === 200;
         } catch (error) {
             console.error('Backend API connection test failed:', error);
             return false;
@@ -55,7 +55,7 @@ export const emailService = {
             if (response && typeof response === 'object') {
                 if ('code' in response && 'message' in response) {
                     if (response.code !== 200) {
-                        throw new Error(response.message || '创建邮箱记录失败');
+                        throw new Error((response as any).message || '创建邮箱记录失败');
                     }
 
                     const emailRecord = response.data;
@@ -63,9 +63,9 @@ export const emailService = {
                         throw new Error('No email record data received');
                     }
 
-                    return emailRecord;
+                    return emailRecord as unknown as EmailRecord;
                 } else {
-                    return response as EmailRecord;
+                    return (response as any).data as EmailRecord;
                 }
             }
 

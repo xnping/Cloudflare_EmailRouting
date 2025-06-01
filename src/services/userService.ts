@@ -60,7 +60,7 @@ export const userService = {
             if (response && typeof response === 'object') {
                 if ('code' in response && 'message' in response) {
                     if (response.code !== 200) {
-                        throw new Error(response.message || '更新用户频次失败');
+                        throw new Error((response as any).message || '更新用户频次失败');
                     }
 
                     const userData = response.data;
@@ -68,10 +68,10 @@ export const userService = {
                         throw new Error('后端未返回用户数据');
                     }
 
-                    return userData;
+                    return userData as unknown as User;
                 } else {
                     if ('id' in response && 'frequency' in response) {
-                        return response as User;
+                        return response as unknown as User;
                     } else {
                         throw new Error('响应数据格式不正确');
                     }
@@ -224,7 +224,7 @@ export const userService = {
             if (response && typeof response === 'object') {
                 if ('code' in response && 'message' in response) {
                     if (response.code !== 200) {
-                        throw new Error(response.message || '卡密充值失败');
+                        throw new Error((response as any).message || '卡密充值失败');
                     }
 
                     const userData = response.data;
@@ -232,10 +232,10 @@ export const userService = {
                         throw new Error('No user data received');
                     }
 
-                    return userData;
+                    return userData as unknown as User;
                 } else {
                     if ('id' in response && 'frequency' in response) {
-                        return response as User;
+                        return response as unknown as User;
                     } else {
                         throw new Error('响应数据格式不正确');
                     }
