@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Input, Button, Card, Typography, Space, Alert, Divider, Checkbox, Tooltip } from 'antd';
-import { UserOutlined, LockOutlined, LoginOutlined, CloudOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import { Form, Input, Button, Card, Typography, Space, Alert, Divider, Checkbox, Tooltip, Row, Col } from 'antd';
+import { UserOutlined, LockOutlined, LoginOutlined, CloudOutlined, InfoCircleOutlined, GiftOutlined, TeamOutlined, QrcodeOutlined } from '@ant-design/icons';
 import { authService } from '../services/authService';
 import { useNavigate } from 'react-router-dom';
 import '../styles/auth.css';
@@ -88,19 +88,198 @@ const Login: React.FC = () => {
             style={{
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                padding: '20px',
+                minHeight: '100vh'
             }}
         >
-            <Card
-                className="auth-card"
-                style={{
-                    width: '100%',
-                    maxWidth: 450,
-                    borderRadius: 20,
-                    border: 'none'
-                }}
-                styles={{ body: { padding: '50px 40px' } }}
-            >
+            <Row gutter={[40, 24]} style={{ width: '100%', maxWidth: 1400, alignItems: 'stretch' }}>
+                {/* 左侧配额说明 */}
+                <Col xs={24} lg={12}>
+                    <Card
+                        style={{
+                            width: '100%',
+                            height: '100%',
+                            borderRadius: 20,
+                            border: 'none',
+                            boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
+                            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+                        }}
+                        styles={{
+                            body: {
+                                padding: '40px 35px',
+                                height: '100%',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'center'
+                            }
+                        }}
+                    >
+                        <Space direction="vertical" size="large" style={{ width: '100%' }}>
+                            {/* 标题 */}
+                            <div style={{ textAlign: 'center', marginBottom: '20px', marginTop: '80px' }}>
+                                <GiftOutlined
+                                    style={{
+                                        fontSize: 48,
+                                        color: '#fff',
+                                        marginBottom: 16
+                                    }}
+                                />
+                                <Title level={3} style={{ color: '#fff', margin: 0 }}>
+                                    免费配额领取
+                                </Title>
+                            </div>
+
+                            {/* 配额说明 */}
+                            <Card
+                                style={{
+                                    borderRadius: 15,
+                                    border: 'none',
+                                    backgroundColor: 'rgba(255,255,255,0.95)',
+                                    backdropFilter: 'blur(10px)'
+                                }}
+                                styles={{ body: { padding: '24px' } }}
+                            >
+                                <div style={{ marginBottom: 16 }}>
+                                    <Text strong style={{ color: '#667eea', fontSize: '16px' }}>
+                                        🎁 新用户福利
+                                    </Text>
+                                </div>
+                                <div style={{ lineHeight: '1.8', marginBottom: 20 }}>
+                                    <div style={{ marginBottom: 8 }}>
+                                        <Text>• 注册即可获得免费邮件转发配额</Text>
+                                    </div>
+                                    <div style={{ marginBottom: 8 }}>
+                                        <Text>• 支持多个邮箱地址转发</Text>
+                                    </div>
+                                    <div style={{ marginBottom: 8 }}>
+                                        <Text>• 稳定可靠的 Cloudflare 服务</Text>
+                                    </div>
+                                    <div>
+                                        <Text>• 24小时技术支持</Text>
+                                    </div>
+                                </div>
+
+                                <div style={{ textAlign: 'center' }}>
+                                    <Button
+                                        type="primary"
+                                        size="large"
+                                        icon={<TeamOutlined />}
+                                        style={{
+                                            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                                            border: 'none',
+                                            borderRadius: 10,
+                                            fontWeight: 600,
+                                            boxShadow: '0 4px 12px rgba(102, 126, 234, 0.3)',
+                                            width: '100%',
+                                            height: 48
+                                        }}
+                                        onClick={() => {
+                                            window.open('https://qm.qq.com/q/6xyXWiq7QI', '_blank');
+                                        }}
+                                    >
+                                        加入QQ群领取配额
+                                    </Button>
+                                </div>
+                            </Card>
+
+                            {/* QQ群二维码 */}
+                            <Card
+                                style={{
+                                    borderRadius: 15,
+                                    border: 'none',
+                                    backgroundColor: 'rgba(255,255,255,0.95)',
+                                    backdropFilter: 'blur(10px)'
+                                }}
+                                styles={{ body: { padding: '24px' } }}
+                            >
+                                <div style={{ textAlign: 'center' }}>
+                                    <div style={{ marginBottom: 16 }}>
+                                        <QrcodeOutlined style={{ fontSize: 24, color: '#1890ff', marginRight: 8 }} />
+                                        <Text strong style={{ color: '#1890ff', fontSize: '16px' }}>
+                                            扫码加群
+                                        </Text>
+                                    </div>
+
+                                    {/* 二维码图片 */}
+                                    <div style={{ marginBottom: 16 }}>
+                                        <img
+                                            src="/images/qq-qrcode.png"
+                                            alt="QQ群二维码"
+                                            style={{
+                                                width: '200px',
+                                                height: '200px',
+                                                borderRadius: 12,
+                                                border: '2px solid #f0f0f0',
+                                                boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+                                            }}
+                                            onError={(e) => {
+                                                // 如果图片加载失败，显示占位符
+                                                const target = e.target as HTMLImageElement;
+                                                target.style.display = 'none';
+                                                const placeholder = target.nextElementSibling as HTMLElement;
+                                                if (placeholder) {
+                                                    placeholder.style.display = 'flex';
+                                                }
+                                            }}
+                                        />
+                                        {/* 占位符 */}
+                                        <div
+                                            style={{
+                                                width: '200px',
+                                                height: '200px',
+                                                borderRadius: 12,
+                                                border: '2px dashed #d9d9d9',
+                                                display: 'none',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                flexDirection: 'column',
+                                                backgroundColor: '#fafafa',
+                                                margin: '0 auto'
+                                            }}
+                                        >
+                                            <QrcodeOutlined style={{ fontSize: 48, color: '#d9d9d9', marginBottom: 8 }} />
+                                            <Text type="secondary" style={{ fontSize: 12 }}>
+                                                请将二维码图片保存到<br/>
+                                                public/images/qq-qrcode.png
+                                            </Text>
+                                        </div>
+                                    </div>
+
+                                    <div style={{ marginBottom: 12 }}>
+                                        <Text strong style={{ fontSize: 16, color: '#262626' }}>
+                                            大风车无限邮官方服务群
+                                        </Text>
+                                    </div>
+                                    <div style={{ marginBottom: 16 }}>
+                                        <Text type="secondary" style={{ fontSize: 14 }}>
+                                            群号：1053615154
+                                        </Text>
+                                    </div>
+                                    <div style={{ fontSize: 13, lineHeight: '1.6', color: '#666' }}>
+                                        <div>• 配额申请与发放</div>
+                                        <div>• 使用教程与技术支持</div>
+                                        <div>• 问题反馈与建议</div>
+                                    </div>
+                                </div>
+                            </Card>
+                        </Space>
+                    </Card>
+                </Col>
+
+                {/* 右侧登录表单 */}
+                <Col xs={24} lg={12}>
+                    <Card
+                        className="auth-card"
+                        style={{
+                            width: '100%',
+                            height: '100%',
+                            borderRadius: 20,
+                            border: 'none',
+                            boxShadow: '0 20px 40px rgba(0,0,0,0.1)'
+                        }}
+                        styles={{ body: { padding: '40px 35px', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' } }}
+                    >
                 <Space direction="vertical" size="large" style={{ width: '100%' }}>
                     {/* Logo和标题 */}
                     <div style={{ textAlign: 'center' }}>
@@ -256,26 +435,28 @@ const Login: React.FC = () => {
                         </Text>
                     </Divider>
 
-                    {/* 注册链接 */}
-                    <div style={{ textAlign: 'center' }}>
-                        <Text type="secondary">
-                            还没有账户？{' '}
-                            <Button
-                                type="link"
-                                style={{
-                                    padding: 0,
-                                    height: 'auto',
-                                    color: '#667eea',
-                                    fontWeight: 500
-                                }}
-                                onClick={() => navigate('/register')}
-                            >
-                                立即注册
-                            </Button>
-                        </Text>
-                    </div>
-                </Space>
-            </Card>
+                        {/* 注册链接 */}
+                        <div style={{ textAlign: 'center' }}>
+                            <Text type="secondary">
+                                还没有账户？{' '}
+                                <Button
+                                    type="link"
+                                    style={{
+                                        padding: 0,
+                                        height: 'auto',
+                                        color: '#667eea',
+                                        fontWeight: 500
+                                    }}
+                                    onClick={() => navigate('/register')}
+                                >
+                                    立即注册
+                                </Button>
+                            </Text>
+                        </div>
+                    </Space>
+                </Card>
+            </Col>
+        </Row>
         </div>
     );
 };

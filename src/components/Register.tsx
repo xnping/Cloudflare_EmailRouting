@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Input, Button, Card, Typography, Space, Alert, Divider, message } from 'antd';
-import { UserOutlined, LockOutlined, UserAddOutlined, CloudOutlined, MailOutlined } from '@ant-design/icons';
+import { Form, Input, Button, Card, Typography, Space, Alert, Divider, message, Row, Col } from 'antd';
+import { UserOutlined, LockOutlined, UserAddOutlined, CloudOutlined, MailOutlined, InfoCircleOutlined, CheckCircleOutlined } from '@ant-design/icons';
 import { authService } from '../services/authService';
 import { useNavigate } from 'react-router-dom';
 import '../styles/auth.css';
@@ -59,13 +59,15 @@ const Register: React.FC = () => {
             message.success({
                 content: (
                     <div>
-                        <div>🎉 注册成功！</div>
-                        <div style={{ fontSize: '12px', color: '#666', marginTop: '4px' }}>
-                            已自动为您创建邮件转发地址，请检查邮箱验证邮件
+                        <div style={{ fontWeight: 'bold', marginBottom: 8 }}>🎉 注册成功！</div>
+                        <div style={{ fontSize: '13px', color: '#666', lineHeight: '1.4' }}>
+                            <div>✅ 已自动为您创建邮件转发地址</div>
+                            <div>📧 请立即检查邮箱中的 Cloudflare 验证邮件</div>
+                            <div>⚠️ 必须完成邮箱验证后才能正常使用</div>
                         </div>
                     </div>
                 ),
-                duration: 4,
+                duration: 6,
             });
 
             // 延迟跳转，让用户看到成功提示
@@ -85,19 +87,134 @@ const Register: React.FC = () => {
             style={{
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                padding: '20px',
+                minHeight: '100vh'
             }}
         >
-            <Card
-                className="auth-card"
-                style={{
-                    width: '100%',
-                    maxWidth: 450,
-                    borderRadius: 20,
-                    border: 'none'
-                }}
-                bodyStyle={{ padding: '50px 40px' }}
-            >
+            <Row gutter={[40, 24]} style={{ width: '100%', maxWidth: 1400, alignItems: 'stretch' }}>
+                {/* 左侧说明信息 */}
+                <Col xs={24} lg={12}>
+                    <Card
+                        style={{
+                            width: '100%',
+                            height: '100%',
+                            borderRadius: 20,
+                            border: 'none',
+                            boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
+                            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+                        }}
+                        styles={{
+                            body: {
+                                padding: '40px 35px',
+                                height: '100%',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'center'
+                            }
+                        }}
+                    >
+                        <Space direction="vertical" size="large" style={{ width: '100%' }}>
+                            {/* 标题 */}
+                            <div style={{ textAlign: 'center', marginBottom: '20px', marginTop: '80px' }}>
+                                <InfoCircleOutlined
+                                    style={{
+                                        fontSize: 48,
+                                        color: '#fff',
+                                        marginBottom: 16
+                                    }}
+                                />
+                                <Title level={3} style={{ color: '#fff', margin: 0 }}>
+                                    注册说明
+                                </Title>
+                            </div>
+
+                            {/* 邮箱注册说明 */}
+                            <Card
+                                style={{
+                                    borderRadius: 15,
+                                    border: 'none',
+                                    backgroundColor: 'rgba(255,255,255,0.95)',
+                                    backdropFilter: 'blur(10px)'
+                                }}
+                                styles={{ body: { padding: '24px' } }}
+                            >
+                                <div style={{ marginBottom: 16 }}>
+                                    <Text strong style={{ color: '#1890ff', fontSize: '16px' }}>
+                                        📧 邮箱要求
+                                    </Text>
+                                </div>
+                                <div style={{ lineHeight: '1.8' }}>
+                                    <div style={{ marginBottom: 8 }}>
+                                        <CheckCircleOutlined style={{ color: '#52c41a', marginRight: 8 }} />
+                                        <Text>邮箱必须是<Text strong style={{ color: '#f5222d' }}>真实有效的邮箱地址</Text></Text>
+                                    </div>
+                                    <div style={{ marginBottom: 8 }}>
+                                        <CheckCircleOutlined style={{ color: '#52c41a', marginRight: 8 }} />
+                                        <Text>建议使用 <Text strong style={{ color: '#1890ff' }}>QQ邮箱</Text> 或 <Text strong style={{ color: '#1890ff' }}>Gmail</Text></Text>
+                                    </div>
+                                    <div style={{ marginBottom: 8 }}>
+                                        <CheckCircleOutlined style={{ color: '#52c41a', marginRight: 8 }} />
+                                        <Text>注册后需要验证邮箱才能使用</Text>
+                                    </div>
+                                    <div>
+                                        <InfoCircleOutlined style={{ color: '#faad14', marginRight: 8 }} />
+                                        <Text type="secondary">请检查垃圾邮件文件夹</Text>
+                                    </div>
+                                </div>
+                            </Card>
+
+                            {/* 注册流程说明 */}
+                            <Card
+                                style={{
+                                    borderRadius: 15,
+                                    border: 'none',
+                                    backgroundColor: 'rgba(255,255,255,0.95)',
+                                    backdropFilter: 'blur(10px)'
+                                }}
+                                styles={{ body: { padding: '24px' } }}
+                            >
+                                <div style={{ marginBottom: 16 }}>
+                                    <Text strong style={{ color: '#667eea', fontSize: '16px' }}>
+                                        📋 注册流程
+                                    </Text>
+                                </div>
+                                <div style={{ lineHeight: '1.8' }}>
+                                    <div style={{ marginBottom: 12, padding: '12px 16px', backgroundColor: '#f6ffed', borderRadius: 8, border: '1px solid #b7eb8f' }}>
+                                        <Text strong style={{ color: '#389e0d' }}>第一步：</Text>
+                                        <Text> 点击注册按钮创建账户</Text>
+                                    </div>
+                                    <div style={{ marginBottom: 12, padding: '12px 16px', backgroundColor: '#e6f7ff', borderRadius: 8, border: '1px solid #91d5ff' }}>
+                                        <Text strong style={{ color: '#1890ff' }}>第二步：</Text>
+                                        <Text> 接收验证邮件</Text>
+                                    </div>
+                                    <div style={{ marginBottom: 12, padding: '12px 16px', backgroundColor: '#fff7e6', borderRadius: 8, border: '1px solid #ffd591' }}>
+                                        <Text strong style={{ color: '#fa8c16' }}>第三步：</Text>
+                                        <Text> 点击邮件中的确认链接</Text>
+                                    </div>
+                                    <div style={{ padding: '12px 16px', backgroundColor: '#f6ffed', borderRadius: 8, border: '1px solid #b7eb8f' }}>
+                                        <Text strong style={{ color: '#389e0d' }}>完成：</Text>
+                                        <Text> 开始使用邮件转发功能</Text>
+                                    </div>
+                                </div>
+                            </Card>
+                        </Space>
+                    </Card>
+                </Col>
+
+                {/* 右侧注册表单 */}
+                <Col xs={24} lg={12}>
+                    <Card
+                        className="auth-card"
+                        style={{
+                            width: '100%',
+                            height: '100%',
+                            borderRadius: 20,
+                            border: 'none',
+                            boxShadow: '0 20px 40px rgba(0,0,0,0.1)'
+                        }}
+                        styles={{ body: { padding: '40px 35px', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' } }}
+                    >
                 <Space direction="vertical" size="large" style={{ width: '100%' }}>
                     {/* Logo和标题 */}
                     <div style={{ textAlign: 'center' }}>
@@ -194,6 +311,8 @@ const Register: React.FC = () => {
                             />
                         </Form.Item>
 
+
+
                         <Form.Item
                             name="email"
                             rules={[
@@ -203,7 +322,7 @@ const Register: React.FC = () => {
                         >
                             <Input
                                 prefix={<MailOutlined style={{ color: '#9ca3af' }} />}
-                                placeholder="请输入邮箱地址"
+                                placeholder="请输入真实邮箱地址（推荐QQ邮箱）"
                                 style={{ borderRadius: 10, height: 52, fontSize: 16 }}
                                 disabled={loading}
                             />
@@ -230,6 +349,8 @@ const Register: React.FC = () => {
                                 {loading ? '注册中...' : '注册'}
                             </Button>
                         </Form.Item>
+
+
                     </Form>
 
                     {/* 分割线 */}
@@ -239,26 +360,30 @@ const Register: React.FC = () => {
                         </Text>
                     </Divider>
 
-                    {/* 登录链接 */}
-                    <div style={{ textAlign: 'center' }}>
-                        <Text type="secondary">
-                            已有账户？{' '}
-                            <Button
-                                type="link"
-                                style={{
-                                    padding: 0,
-                                    height: 'auto',
-                                    color: '#667eea',
-                                    fontWeight: 500
-                                }}
-                                onClick={() => navigate('/login')}
-                            >
-                                立即登录
-                            </Button>
-                        </Text>
-                    </div>
-                </Space>
-            </Card>
+                        {/* 登录链接 */}
+                        <div style={{ textAlign: 'center' }}>
+                            <Text type="secondary">
+                                已有账户？{' '}
+                                <Button
+                                    type="link"
+                                    style={{
+                                        padding: 0,
+                                        height: 'auto',
+                                        color: '#667eea',
+                                        fontWeight: 500
+                                    }}
+                                    onClick={() => navigate('/login')}
+                                >
+                                    立即登录
+                                </Button>
+                            </Text>
+                        </div>
+                    </Space>
+                </Card>
+            </Col>
+
+
+        </Row>
         </div>
     );
 };
