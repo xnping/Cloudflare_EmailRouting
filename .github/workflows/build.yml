@@ -21,12 +21,14 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '20'
-        cache: 'npm'
 
     - name: Install dependencies and build
       run: |
+        # 清理可能存在的依赖问题
+        rm -rf node_modules package-lock.json
         npm install
-        npm run build
+        # 如果构建失败，尝试重新安装
+        npm run build || (rm -rf node_modules package-lock.json && npm install && npm run build)
 
     - name: Create dist archive
       run: |
