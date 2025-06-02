@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Input, Button, Card, Typography, Space, Alert, Divider, Checkbox } from 'antd';
-import { UserOutlined, LockOutlined, LoginOutlined, CloudOutlined } from '@ant-design/icons';
+import { Form, Input, Button, Card, Typography, Space, Alert, Divider, Checkbox, Tooltip } from 'antd';
+import { UserOutlined, LockOutlined, LoginOutlined, CloudOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { authService } from '../services/authService';
 import { useNavigate } from 'react-router-dom';
 import '../styles/auth.css';
@@ -13,6 +13,7 @@ const Login: React.FC = () => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
+
     // 添加键盘快捷键支持和全屏设置
     useEffect(() => {
         // 设置body类名以启用认证页面样式
@@ -20,13 +21,22 @@ const Login: React.FC = () => {
 
         // 初始化保存的用户名和记住我状态
         const savedUsername = authService.getSavedUsername();
+        const savedPassword = authService.getSavedPassword();
         const rememberMe = authService.getRememberMe();
+        const rememberPassword = authService.isPasswordRemembered();
 
         if (savedUsername && rememberMe) {
-            form.setFieldsValue({
+            const formValues: any = {
                 username: savedUsername,
                 remember: true
-            });
+            };
+
+            if (savedPassword && rememberPassword) {
+                formValues.password = savedPassword;
+                formValues.rememberPassword = true;
+            }
+
+            form.setFieldsValue(formValues);
         }
 
         const handleKeyPress = (e: KeyboardEvent) => {
@@ -49,7 +59,7 @@ const Login: React.FC = () => {
         };
     }, [form, error]);
 
-    const handleSubmit = async (values: { username: string; password: string; remember?: boolean }) => {
+    const handleSubmit = async (values: { username: string; password: string; remember?: boolean; rememberPassword?: boolean }) => {
         setError('');
         setLoading(true);
 
@@ -57,7 +67,8 @@ const Login: React.FC = () => {
             const response = await authService.login({
                 username: values.username,
                 password: values.password,
-                remember: values.remember || false
+                remember: values.remember || false,
+                rememberPassword: values.rememberPassword || false
             });
             if (response && response.token) {
                 navigate('/', { replace: true });
@@ -88,7 +99,7 @@ const Login: React.FC = () => {
                     borderRadius: 20,
                     border: 'none'
                 }}
-                bodyStyle={{ padding: '50px 40px' }}
+                styles={{ body: { padding: '50px 40px' } }}
             >
                 <Space direction="vertical" size="large" style={{ width: '100%' }}>
                     {/* Logo和标题 */}
@@ -154,20 +165,65 @@ const Login: React.FC = () => {
                             />
                         </Form.Item>
 
-                        <Form.Item
-                            name="remember"
-                            valuePropName="checked"
-                            style={{ marginBottom: 24 }}
-                        >
-                            <Checkbox
-                                style={{
-                                    fontSize: 15,
-                                    color: '#6b7280'
-                                }}
-                                disabled={loading}
+                        <Form.Item style={{ marginBottom: 8 }}>
+                            <Form.Item
+                                name="remember"
+                                valuePropName="checked"
+                                style={{ marginBottom: 0 }}
                             >
-                                记住我（下次自动填充用户名）
-                            </Checkbox>
+                                <Checkbox
+                                    style={{
+                                        fontSize: 15,
+                                        color: '#6b7280'
+                                    }}
+                                    disabled={loading}
+                                >
+                                    记住我（下次自动填充用户名）
+                                </Checkbox>
+                            </Form.Item>
+                        </Form.Item>
+
+                        <Form.Item
+                            name="rememberPassword"
+                            valuePropName="checked"
+                            style={{ marginBottom: 8 }}
+                            dependencies={['remember']}
+                        >
+                            {({ getFieldValue }) => (
+                                <Checkbox
+                                    style={{
+                                        fontSize: 15,
+                                        color: '#6b7280'
+                                    }}
+                                    disabled={loading || !getFieldValue('remember')}
+                                >
+                                    <Space>
+                                        记住密码（仅在本设备）
+                                        <Tooltip title="密码将加密保存在本地，仅在当前设备有效。建议仅在个人设备上使用此功能。">
+                                            <InfoCircleOutlined style={{ color: '#9ca3af' }} />
+                                        </Tooltip>
+                                    </Space>
+                                </Checkbox>
+                            )}
+                        </Form.Item>
+
+                        {/* 安全提示 */}
+                        <Form.Item dependencies={['rememberPassword']} style={{ marginBottom: 24 }}>
+                            {({ getFieldValue }) =>
+                                getFieldValue('rememberPassword') && (
+                                    <Alert
+                                        message="安全提示"
+                                        description="密码将以加密形式保存在本地。请确保这是您的个人设备，不要在公共或共享设备上使用此功能。"
+                                        type="warning"
+                                        showIcon
+                                        style={{
+                                            fontSize: 12,
+                                            borderRadius: 8,
+                                            marginTop: 8
+                                        }}
+                                    />
+                                )
+                            }
                         </Form.Item>
 
                         <Form.Item style={{ marginBottom: 16 }}>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { message } from 'antd';
 import { adminApi, type AdminCardCode } from '../services/adminApi';
 import './ModernCardCodeManagement.css';
 
@@ -83,7 +84,7 @@ const ModernCardCodeManagement: React.FC = () => {
       await adminApi.updateCardCode(codeId, { status: 'disabled' });
       await loadCardCodes(); // 重新加载数据
     } catch (err) {
-      alert(err instanceof Error ? err.message : '禁用卡密失败');
+      message.error(err instanceof Error ? err.message : '禁用卡密失败');
     } finally {
       setLoading(false);
     }
@@ -98,7 +99,7 @@ const ModernCardCodeManagement: React.FC = () => {
       await loadCardCodes(); // 重新加载数据
       setSelectedCodes(prev => prev.filter(id => id !== codeId));
     } catch (err) {
-      alert(err instanceof Error ? err.message : '删除卡密失败');
+      message.error(err instanceof Error ? err.message : '删除卡密失败');
     } finally {
       setLoading(false);
     }
@@ -114,7 +115,7 @@ const ModernCardCodeManagement: React.FC = () => {
       await loadCardCodes(); // 重新加载数据
       setSelectedCodes([]);
     } catch (err) {
-      alert(err instanceof Error ? err.message : '批量删除卡密失败');
+      message.error(err instanceof Error ? err.message : '批量删除卡密失败');
     } finally {
       setLoading(false);
     }
@@ -134,11 +135,11 @@ const ModernCardCodeManagement: React.FC = () => {
     try {
       setLoading(true);
       await adminApi.generateCardCodesForAdmin(generateForm);
-      alert(`成功生成 ${generateForm.count} 个卡密！`);
+      message.success(`成功生成 ${generateForm.count} 个卡密！`);
       setShowGenerateModal(false);
       await loadCardCodes(); // 重新加载数据
     } catch (err) {
-      alert(err instanceof Error ? err.message : '生成卡密失败');
+      message.error(err instanceof Error ? err.message : '生成卡密失败');
     } finally {
       setLoading(false);
     }

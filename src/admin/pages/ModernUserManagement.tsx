@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { message } from 'antd';
 import { adminApi, type AdminUser } from '../services/adminApi';
 import './ModernUserManagement.css';
 
@@ -154,7 +155,7 @@ const ModernUserManagement: React.FC = () => {
       setSelectedUsers(prev => prev.filter(id => id !== userId));
     } catch (err) {
       console.error('删除用户失败:', err);
-      alert(err instanceof Error ? err.message : '删除用户失败');
+      message.error(err instanceof Error ? err.message : '删除用户失败');
     } finally {
       setLoading(false);
     }
@@ -171,7 +172,7 @@ const ModernUserManagement: React.FC = () => {
       setSelectedUsers([]);
     } catch (err) {
       console.error('批量删除用户失败:', err);
-      alert(err instanceof Error ? err.message : '批量删除用户失败');
+      message.error(err instanceof Error ? err.message : '批量删除用户失败');
     } finally {
       setLoading(false);
     }
@@ -192,12 +193,12 @@ const ModernUserManagement: React.FC = () => {
     try {
       setLoading(true);
       await adminApi.createUser(createForm);
-      alert('用户创建成功！');
+      message.success('用户创建成功！');
       setShowCreateModal(false);
       await loadUsers(); // 重新加载数据
     } catch (err) {
       console.error('创建用户失败:', err);
-      alert(err instanceof Error ? err.message : '创建用户失败');
+      message.error(err instanceof Error ? err.message : '创建用户失败');
     } finally {
       setLoading(false);
     }
@@ -273,7 +274,7 @@ const ModernUserManagement: React.FC = () => {
         throw new Error('用户信息更新失败');
       }
 
-      alert('用户更新成功！');
+      message.success('用户更新成功！');
       setShowEditModal(false);
       await loadUsers(); // 重新加载数据
     } catch (err: any) {
@@ -284,7 +285,7 @@ const ModernUserManagement: React.FC = () => {
         errorMessage = err.response.data.message;
       }
 
-      alert(errorMessage);
+      message.error(errorMessage);
     } finally {
       setLoading(false);
     }

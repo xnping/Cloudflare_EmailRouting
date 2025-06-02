@@ -48,7 +48,7 @@ const Register: React.FC = () => {
         setLoading(true);
 
         try {
-            const response = await authService.register({
+            await authService.register({
                 username: values.username,
                 password: values.password,
                 email: values.email,

@@ -61,7 +61,7 @@ const transformBackendUser = (backendUser: BackendUser): User => {
 };
 
 export const authService = {
-    async login(data: LoginRequest & { remember?: boolean }): Promise<AuthResponseData> {
+    async login(data: LoginRequest & { remember?: boolean; rememberPassword?: boolean }): Promise<AuthResponseData> {
         try {
 
             const response = await api.post<ApiResponse<{ user: BackendUser; token: string }>>('/login', {
@@ -103,7 +103,10 @@ export const authService = {
             storage.setItem('user', JSON.stringify(authData.user));
             storage.setItem('rememberMe', data.remember ? 'true' : 'false');
 
-
+            // 保存登录凭据（如果选择了记住我）
+            if (data.remember) {
+                this.saveCredentials(data.username, data.password, data.rememberPassword || false);
+            }
 
             return authData;
         } catch (error: any) {
@@ -190,6 +193,9 @@ export const authService = {
         sessionStorage.removeItem('token');
         sessionStorage.removeItem('user');
         sessionStorage.removeItem('rememberMe');
+
+        // 清除保存的凭据
+        this.clearSavedCredentials();
     },
 
     getCurrentUser() {
@@ -226,6 +232,56 @@ export const authService = {
             return user?.username || null;
         }
         return null;
+    },
+
+    // 简单的密码加密/解密（仅用于本地存储，不是真正的安全加密）
+    encryptPassword(password: string): string {
+        // 使用简单的Base64编码（注意：这不是安全的加密，只是混淆）
+        return btoa(password + 'cloudflare_email_routing');
+    },
+
+    decryptPassword(encryptedPassword: string): string {
+        try {
+            const decoded = atob(encryptedPassword);
+            return decoded.replace('cloudflare_email_routing', '');
+        } catch {
+            return '';
+        }
+    },
+
+    // 保存登录凭据
+    saveCredentials(username: string, password: string, rememberPassword: boolean = false): void {
+        if (this.getRememberMe()) {
+            localStorage.setItem('savedUsername', username);
+            if (rememberPassword) {
+                localStorage.setItem('savedPassword', this.encryptPassword(password));
+                localStorage.setItem('rememberPassword', 'true');
+            } else {
+                localStorage.removeItem('savedPassword');
+                localStorage.removeItem('rememberPassword');
+            }
+        }
+    },
+
+    // 获取保存的密码
+    getSavedPassword(): string | null {
+        if (this.getRememberMe() && localStorage.getItem('rememberPassword') === 'true') {
+            const encryptedPassword = localStorage.getItem('savedPassword');
+            return encryptedPassword ? this.decryptPassword(encryptedPassword) : null;
+        }
+        return null;
+    },
+
+    // 检查是否记住密码
+    isPasswordRemembered(): boolean {
+        return this.getRememberMe() && localStorage.getItem('rememberPassword') === 'true';
+    },
+
+    // 清除保存的凭据
+    clearSavedCredentials(): void {
+        localStorage.removeItem('savedUsername');
+        localStorage.removeItem('savedPassword');
+        localStorage.removeItem('rememberPassword');
     },
 
     // 获取用户信息

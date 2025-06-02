@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { message } from 'antd';
 import { adminApi, type AdminEmailRecord } from '../services/adminApi';
 import './ModernEmailManagement.css';
 
@@ -94,7 +95,7 @@ const ModernEmailManagement: React.FC = () => {
       setSelectedEmails(prev => prev.filter(id => id !== emailId));
     } catch (err) {
       console.error('删除邮件转发规则失败:', err);
-      alert(err instanceof Error ? err.message : '删除邮件转发规则失败');
+      message.error(err instanceof Error ? err.message : '删除邮件转发规则失败');
     } finally {
       setLoading(false);
     }
@@ -111,7 +112,7 @@ const ModernEmailManagement: React.FC = () => {
       setSelectedEmails([]);
     } catch (err) {
       console.error('批量删除邮件转发规则失败:', err);
-      alert(err instanceof Error ? err.message : '批量删除邮件转发规则失败');
+      message.error(err instanceof Error ? err.message : '批量删除邮件转发规则失败');
     } finally {
       setLoading(false);
     }
@@ -130,12 +131,12 @@ const ModernEmailManagement: React.FC = () => {
     try {
       setLoading(true);
       await adminApi.createEmailForAdmin(createForm);
-      alert('转发规则创建成功！');
+      message.success('转发规则创建成功！');
       setShowCreateModal(false);
       await loadEmails(); // 重新加载数据
     } catch (err) {
       console.error('创建转发规则失败:', err);
-      alert(err instanceof Error ? err.message : '创建转发规则失败');
+      message.error(err instanceof Error ? err.message : '创建转发规则失败');
     } finally {
       setLoading(false);
     }
@@ -166,12 +167,12 @@ const ModernEmailManagement: React.FC = () => {
         email: editForm.email,
         toEmail: editForm.toEmail
       });
-      alert('邮件转发规则更新成功！');
+      message.success('邮件转发规则更新成功！');
       setShowEditModal(false);
       await loadEmails(); // 重新加载数据
     } catch (err) {
       console.error('更新邮件转发规则失败:', err);
-      alert(err instanceof Error ? err.message : '更新邮件转发规则失败');
+      message.error(err instanceof Error ? err.message : '更新邮件转发规则失败');
     } finally {
       setLoading(false);
     }

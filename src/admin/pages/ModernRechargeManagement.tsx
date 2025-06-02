@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { message } from 'antd';
 import { adminApi, type AdminRechargeRecord } from '../services/adminApi';
 import './ModernRechargeManagement.css';
 
@@ -84,7 +85,7 @@ const ModernRechargeManagement: React.FC = () => {
       await loadRechargeRecords(); // 重新加载数据
       setSelectedRecords(prev => prev.filter(id => id !== recordId));
     } catch (err) {
-      alert(err instanceof Error ? err.message : '删除充值记录失败');
+      message.error(err instanceof Error ? err.message : '删除充值记录失败');
     } finally {
       setLoading(false);
     }
@@ -100,7 +101,7 @@ const ModernRechargeManagement: React.FC = () => {
       await loadRechargeRecords(); // 重新加载数据
       setSelectedRecords([]);
     } catch (err) {
-      alert(err instanceof Error ? err.message : '批量删除充值记录失败');
+      message.error(err instanceof Error ? err.message : '批量删除充值记录失败');
     } finally {
       setLoading(false);
     }
@@ -124,11 +125,11 @@ const ModernRechargeManagement: React.FC = () => {
         amount: rechargeForm.amount,
         description: rechargeForm.description
       });
-      alert(`成功为用户 ${rechargeForm.username} 充值 ${rechargeForm.amount} 次！`);
+      message.success(`成功为用户 ${rechargeForm.username} 充值 ${rechargeForm.amount} 次！`);
       setShowRechargeModal(false);
       await loadRechargeRecords(); // 重新加载数据
     } catch (err) {
-      alert(err instanceof Error ? err.message : '管理员充值失败');
+      message.error(err instanceof Error ? err.message : '管理员充值失败');
     } finally {
       setLoading(false);
     }

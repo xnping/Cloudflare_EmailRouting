@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { message } from 'antd';
 import { adminApi, type AdminSystemConfig, type AdminSystemStatus } from '../services/adminApi';
 import './ModernSystemSettings.css';
 
@@ -67,14 +68,14 @@ const ModernSystemSettings: React.FC = () => {
       const updatedConfig = await adminApi.updateSystemConfig(config);
       setConfig(updatedConfig);
 
-      alert('✅ 设置保存成功！');
+      message.success('设置保存成功！');
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : '保存设置失败';
 
       if (errorMessage.includes('后端暂未实现')) {
-        alert('⚠️ ' + errorMessage + '\n\n配置已在前端临时保存，但需要后端支持才能永久保存。');
+        message.warning(errorMessage + ' - 配置已在前端临时保存，但需要后端支持才能永久保存。');
       } else {
-        alert('❌ ' + errorMessage);
+        message.error(errorMessage);
       }
     } finally {
       setSaving(false);
@@ -90,7 +91,7 @@ const ModernSystemSettings: React.FC = () => {
       const resetConfig = await adminApi.resetSystemConfig();
       setConfig(resetConfig);
 
-      alert('✅ 设置重置成功！所有配置已恢复到默认值。');
+      message.success('设置重置成功！所有配置已恢复到默认值。');
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : '重置设置失败';
 
@@ -108,9 +109,9 @@ const ModernSystemSettings: React.FC = () => {
           sessionTimeout: 24
         };
         setConfig(defaultConfig);
-        alert('⚠️ 后端未实现重置接口，已在前端重置到默认配置。');
+        message.warning('后端未实现重置接口，已在前端重置到默认配置。');
       } else {
-        alert('❌ ' + errorMessage);
+        message.error(errorMessage);
       }
     } finally {
       setSaving(false);
